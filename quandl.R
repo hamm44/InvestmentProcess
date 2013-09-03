@@ -1,4 +1,4 @@
-#Quandl Data Sets for Mac
+#Quandl Data Sets
 
 setwd("C:/Users/Mike/Dropbox/Investment/R/RScripts")
 token <- 'jMzykr2TqHKytNTHknXH'
