@@ -93,14 +93,14 @@ summary(fitMining)
 res <- residuals(fitMining)
 Acf(res) #plot autocorrelation of the residuals of the fitted
 
+#use ETS to forecast (ets: exponential smoothing, trend, season)
+fitm <- ets(miningTs)
+f2 <- forecast(fitm, h=5)
+plot(f2, ylab="Australian Mining Industry Forecast", xlab="year")
 
-
-
-
-
-
-
-
+par(mfrow=c(1,2))
+plot(f, ylab="Australian Mining Industry Forecast", xlab="year") #linear regression
+plot(f2, ylab="Australian Mining Industry Forecast", xlab="year") #ets model, looks better
 
 
 
