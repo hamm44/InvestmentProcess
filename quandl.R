@@ -1,5 +1,5 @@
-#Quandl Data Sets
-
+# Quandl Data Sets
+# http://www.quandl.com/
 setwd("C:/Users/Mike/Dropbox/Investment/R/RScripts")
 token <- 'jMzykr2TqHKytNTHknXH'
 
