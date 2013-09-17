@@ -67,7 +67,7 @@ data2 <- as.timeSeries(data2)
 data.cov <- covEstimator(data2) 
 
 # define number of assets and constraints
-assets <- 5
+assets <- ncol(data2)
 constraints <- c('LongOnly')   #specify as long only
 constraints <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5') #specify with min weights to max weights
   # constraints  <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5', 'minsumW[c("LULU", "AAPL")]=0.1') 
@@ -77,6 +77,7 @@ constraints <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5') #specify with min wei
 spec <- portfolioSpec()
 setNFrontierPoints(spec) <- 25
 setSolver(spec) <- "solveRquadprog"
+  
 
 # check the constraints
 portfolioConstraints(data2, spec, constraints)

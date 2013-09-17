@@ -1,4 +1,5 @@
 # POptimization Book
+library(quantmod)
 library(fPortfolio)
 library(Quandl) 
 library(timeSeries)
@@ -92,6 +93,7 @@ aggregate(tS, by, FUN=sum, units=c("TSQ.1", "TSQ.2"))
 # returnPlot()
 # cumulatedPlot()
 
+rownames(data3) # gives the dates
 xlim = c(start(data3), end(data3))
 atlimit <- as.Date(seq(start(data3), end(data3), by="month"))
 plot(data3, plot.type="single", ylab="Daily Returns", main="Stocks", col=rainbow(ncol(data3)))
@@ -130,9 +132,29 @@ kmeansData <- assetsSelect(data3, method = "kmeans",
 sort(kmeansData$cluster)
 plot(kmeansData)
 
-#### pg 139 Comparing Multivariate Return and Risk statistics #####
+#### pg 167 Portfolio Framework #####
 
+#### pg 273 Case Study Down Jones #####
+# Load Data
+dow.url <- "http://finance.yahoo.com/q/cp?s=%5EDJI+Components"
+require(XML)
+stocksDow <- readHTMLTable(dow.url, header=TRUE, which =9)
+stocksDow <- as.character(stocksDow[,1])
+# stocksDow <- c("MMM", "AA", 'AXP','T','BAC','BA','CAT','CVX', 'KO','CSCO', 'DIS', 'DD', 'XOM', 'GE', 'HPQ', 'HD',
+ #              'IBM', 'INTC', 'JNJ', 'JPM', 'KFT', 'MCD', 'MRK', 'MSFT', 'PFE', 'PG', 'TRV', 'UTZ', 'VZ', 'WMT')
+getSymbols(stocksDow)
+# setSymbols(x, src="yahoo", return.class='timeSeries')
+showSymbols()
 
+Quandl.search("AA")
+
+stocks <- c("AAPL", "LULU", "MX", "TGA", "NLY")
+code <- list()
+for (i in stocks) {
+  res <- as.character(Quandl.search(i))
+  resInd <- regexpr(paste("GOOG/[A-Z]*_", i, sep=""), res)
+  code[[i]] <- (regmatches(res, resInd))
+} 
 
 
 
