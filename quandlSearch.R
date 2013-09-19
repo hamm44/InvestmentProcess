@@ -4,6 +4,11 @@ library(timeSeries)
 token <- 'jMzykr2TqHKytNTHknXH'
 Quandl.auth(token)
 
+# notes about the Quandl.search() function
+# add in Quandl.search("term", source="GOOG")  or source="YHOO", "FRED", etc
+
+
+
 options(digits=4)   
 
 # user defined input variables
@@ -11,19 +16,27 @@ stocks <- c("AAPL", "WNC", "EBIX", "MX", "TGA", "NLY") # list the codes you want
 startDate <-"2012-01-01"
 endDate <- "2013-09-01" 
 trans <- "rdiff" #diff, cumul, normalize
-coll <- "none" #daily, weekly, monthly, quarterly, annual
+# collapse <- "none" #daily, weekly, monthly, quarterly, annual
 
 # initialise list, then find the codes using regexp on the search results
-code <- list()
-for (i in stocks) {
-  res <- as.character(Quandl.search(i))
-  resInd <- regexpr(paste("GOOG/[A-Z]*_", i, sep=""), res)
-  code[[i]] <- (regmatches(res, resInd))
-} 
+stockD <- function(stocks, startDate, endDate, trans){
+  code <- list()
+  for (i in stocks) {
+    res <- as.character(Quandl.search(i, source="GOOG"))
+    resInd <- regexpr(paste("GOOG/[A-Z]*_", i, sep=""), res) # searches with google data
+    code[[i]] <- (regmatches(res, resInd))
+  } 
+  
+  # Make the list into a vector and add .4 ( to return the 4th column of data)
+  stockList <- paste(unlist(code), ".4", sep="")
+  # once we have the codes, we want to download the data
+  data <- Quandl(stockList, start_date=startDate, end_date=endDate, type="zoo", transformation=trans)
+  names(data) <- stocks
+  
+  # show the data format
+  head(data)
+  return(data)
+}
 
-# Make the list into a vector and add .4 ( to return the 4th column of data)
-stockList <- paste(unlist(code), ".4", sep="")
-# once we have the codes, we want to download the data
-data <- Quandl(stockList, start_date=startDate, end_date=endDate, type="zoo", transformation=trans, collapse=coll)
-names(data) <- stocks
-head(data)
+
+# test for dow jones

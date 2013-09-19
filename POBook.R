@@ -142,19 +142,17 @@ stocksDow <- readHTMLTable(dow.url, header=TRUE, which =9)
 stocksDow <- as.character(stocksDow[,1])
 # stocksDow <- c("MMM", "AA", 'AXP','T','BAC','BA','CAT','CVX', 'KO','CSCO', 'DIS', 'DD', 'XOM', 'GE', 'HPQ', 'HD',
  #              'IBM', 'INTC', 'JNJ', 'JPM', 'KFT', 'MCD', 'MRK', 'MSFT', 'PFE', 'PG', 'TRV', 'UTZ', 'VZ', 'WMT')
-getSymbols(stocksDow)
+
+# getSymbols(stocksDow)
 # setSymbols(x, src="yahoo", return.class='timeSeries')
-showSymbols()
+# showSymbols()
 
-Quandl.search("AA")
+# Run quandlSearch.R function stocksD()
+stockD(stocksDow, startDate, endDate, "rdiff") # code stops between PG and TRV, each individual search retrurns 
+                                                # valid data but I don't know why it doesn't work
 
-stocks <- c("AAPL", "LULU", "MX", "TGA", "NLY")
-code <- list()
-for (i in stocks) {
-  res <- as.character(Quandl.search(i))
-  resInd <- regexpr(paste("GOOG/[A-Z]*_", i, sep=""), res)
-  code[[i]] <- (regmatches(res, resInd))
-} 
+
+
 
 
 
