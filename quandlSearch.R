@@ -33,8 +33,9 @@ stockCodes <- function(stocks){
 }
 
   # once we have the codes, we want to download the data
-stockData <- function(stockC, startDate, endDate, trans){  
-  data <- Quandl(stockC, start_date=startDate, end_date=endDate, type="zoo", transformation=trans)
+stockData <- function(stockC, startDate, endDate, trans=NULL, collapse=NULL){  
+  data <- Quandl(stockC, start_date=startDate, end_date=endDate, type="zoo", transformation=trans, 
+                 collapse=collapse)
   # show the data format
   return(data)
   
