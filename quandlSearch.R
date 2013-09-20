@@ -23,7 +23,7 @@ stockCodes <- function(stocks){
   code <- list()
   for (i in stocks) {
     res <- as.character(Quandl.search(i, source="GOOG", silent=TRUE))
-    resInd <- regexpr(paste("GOOG/[A|N][A-Z]+_", i, sep=""), res) # searches with google data
+    resInd <- regexpr(paste("GOOG/[A|N|L][A-Z]+_", i, sep=""), res) # searches with google data
     code[[i]] <- (regmatches(res, resInd))
   } 
   
@@ -35,9 +35,9 @@ stockCodes <- function(stocks){
   # once we have the codes, we want to download the data
 stockData <- function(stockC, startDate, endDate, trans){  
   data <- Quandl(stockC, start_date=startDate, end_date=endDate, type="zoo", transformation=trans)
-  
   # show the data format
   return(data)
+  
 }
 
 
