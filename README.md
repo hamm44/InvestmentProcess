@@ -16,3 +16,6 @@ Files in the Project:
       -quandl.com is a site that aggregates economic data from various sources and allows for 
       simple API calls.  This site can be used to chart economic trends and stock price 
       correlations.
+      -quandlSearch.R is a file used to search a list of stock codes, filter through quandl data of Google.com
+      and add the files to a zoo file format.  Can return prices or returns.
+      
