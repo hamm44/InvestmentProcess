@@ -18,4 +18,6 @@ Files in the Project:
       correlations.
       -quandlSearch.R is a file used to search a list of stock codes, filter through quandl data of Google.com
       and add the files to a zoo file format.  Can return prices or returns.
-      
+  4. POBook
+      -Added notes on the Portfolio Optimization Book
+      -Charting, Quick Optimisation commands.
