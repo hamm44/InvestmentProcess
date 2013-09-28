@@ -3,7 +3,8 @@
 library(fPortfolio)
 library(timeSeries)
 library(PerformanceAnalytics)
-options(scipen=999, digits=4)
+library(Quandl)
+
 token <- 'jMzykr2TqHKytNTHknXH'
 Quandl.auth(token)
 # Find the stock codes using the quandlSearch.R function
@@ -23,12 +24,13 @@ codes   # after seeing that there is FRA pkx, i remove this column
 prices <- stockData(codes, startDate, endDate, trans)
 names(prices) <- stocks          # rename the columns
 
-ret.ewtmp <- stockData(codes, "2010-01-01", endDate, trans="rdiff")
+ret.ewtmp <- stockData(codes, startDate, endDate, trans="rdiff")
 names(ret.ewtmp) <- stocks
 
 tail(prices)
 tail(ret.ewtmp)
-
+class(prices)
+class(ret.ewtmp)
 # Plot the returns as time series
 prices.ts <- as.timeSeries(prices)
 ret.ts <- as.timeSeries(ret.ewtmp)
@@ -67,26 +69,17 @@ boxPercentilePlot(ret.ts)
   #remember it's boxPlot not boxplot (the capital P allows all of the series to be plotted)
 
 ####### Portfolio Optimisation #################
-# assets <- ncol(ret.ts)
-constraints <- c('LongOnly')   #specify as long only
-source("POptim.R")
-POptim(ret.ts, c('LongOnly'))
-PlotFrontier()
-PlotWeights()
-
-
 
 assets <- ncol(ret.ts)
 constraints <- c('LongOnly')   #specify as long only
-constraints <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5') #specify with min weights to max weights
+# constraints <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5') #specify with min weights to max weights
 # constraints  <- c('minW[1:assets]=0', 'maxW[1:assets]=0.5', 'minsumW[c("LULU", "AAPL")]=0.1') 
-# can also add in constraints where you hold a certain amount of assets in your portfolio.
+            # can also add in constraints where you hold a certain amount of assets in your portfolio.
 
 # optimisation specs
 spec <- portfolioSpec()
 setNFrontierPoints(spec) <- 25
 setSolver(spec) <- "solveRquadprog"
-
 
 # check the constraints
 portfolioConstraints(ret.ts, spec, constraints)
@@ -99,6 +92,5 @@ print(frontier)
 tailoredFrontierPlot(frontier)  #plots the efficient frontier
 
 #plot weights
-weightsPlot(frontier)
 weightsPlot(frontier, col=rainbow(assets)) # uses different colours
-weightsPlot(frontier, col=heat.colors(assets))
+

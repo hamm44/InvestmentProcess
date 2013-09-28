@@ -55,8 +55,12 @@ cashFV
 ROE <- RelRat(df, "Return on Equity.", stocks)
 ROE
 
+# Reference the csv to find the row I'm trying to pull, and pull it into R
+# Use the excel sheet to find the row numbers, because subsetting by row names is difficult when data missing
 
+EvEb <- finalData[c(27, 94, 211, 279),]
 
+t(EvEb)
 
 
 
