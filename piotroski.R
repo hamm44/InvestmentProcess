@@ -39,6 +39,9 @@ piotPB <- function(lb,ub){
 
 pscreen <- piotPB(0.9,3)
 pscreen[with(pscreen, order(Sector)),]  # return with sectors grouped
+peorder <- pscreen[order(pscreen[,8]),] # order the list by pe
+peorder[which(peorder[,7]>0),] # remove negative earnings
+peorder[which(peorder[,7]<0),]  # have a look at companies with negative earnings to look at turnaround oppg
 
 # print(xtable(pscreen), type="HTML")
 
@@ -55,6 +58,9 @@ piotPE <- function(lb,ub){
 
 pscreen2 <- piotPE(3,11)
 pscreen2[with(pscreen2, order(Sector)),]
+ps2order <- pscreen2[order(pscreen2[,8]),]
+pscreen2[which(pscreen2$Sector == 'General Contractors' & pscreen2$Exchange == 'ASX'),] # filter out ASX + sector
+
 
 write.table(pscreen2, file="piotroskiPE.csv", sep = ",", row.names=FALSE)
 
